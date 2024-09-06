@@ -1,9 +1,10 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import injectContext from "./store/appContext";
+import injectContext from "./store/appContext.js";
 // Custom components
 import ScrollToTop from "./component/ScrollToTop.jsx";
 import { BackendURL } from "./component/BackendURL.jsx";
+
 import { Footer } from "./component/Footer.jsx";
 import { Navbar } from "./component/Navbar.jsx";
 // Custom pages / views
@@ -29,7 +30,7 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} path="*" />
-                    </Routes>
+                    </Routes> 
                     <Footer />
                 </ScrollToTop>
             </BrowserRouter>

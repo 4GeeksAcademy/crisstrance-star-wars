@@ -1,6 +1,9 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import { ContextExample } from "../component/ContentExample.jsx"
+import { AddCard } from "../component/AddCard.jsx"
 import rigoImageUrl from "../../img/rigo-baby.jpg";
+import swland from "../../img/star-wars-back0.jpg";
 import "../../styles/home.css";
 
 export const Home = () => {
@@ -8,10 +11,10 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
+			{/* <ContextExample /> */}
+			<img src={swland} class="img-fluid" alt="..."></img>
+
+			<AddCard />
 			<div className="alert alert-info">
 				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
 			</div>
