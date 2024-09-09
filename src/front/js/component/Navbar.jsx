@@ -16,7 +16,7 @@ export const Navbar = () => {
 				</div>
 				<div>
 					<ul className="nav me-auto mb-2 mb-lg-0">
-						<li className="nav-item"><a className="nav-link link-secondary" href="/characters">Characters</a></li>
+								<li className="nav-item"><a className="nav-link link-secondary" href="/characters"> Characters</a></li>
 						<li className="nav-item"><a className="nav-link link-secondary" href="/planets">Planets</a></li>
 						<li className="nav-item"><a className="nav-link link-secondary" href="/starships">Starships</a></li>
 						<li className="nav-item"><a className="nav-link link-secondary" href="/contacts">Contacts</a></li>
