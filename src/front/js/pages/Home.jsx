@@ -14,9 +14,8 @@ export const Home = () => {
 		<div className="text-center mt-5">
 			{/* <ContextExample /> */}
 			<div className="container">
-				<Spinner/>
 
-			<img src={swland} className="img-fluid " alt="..."></img>
+				<img src={swland} className="img-fluid " alt="..."></img>
 			</div>
 
 			{/* <div className="alert alert-info">

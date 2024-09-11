@@ -22,10 +22,6 @@ export const AddCard = () => {
 								<label for="contactPhone" className="form-label"><i className="fa-solid fa-house me-1"></i><strong>Address:</strong> Contact address</label>
 								<input type="text" className="form-control" id="contactPhone" aria-describedby="contactPhoneHelp" />
 							</div>
-							<div className="mb-3">
-								<label for="exampleInputPassword1" className="form-label">Password</label>
-								<input type="password" className="form-control" id="exampleInputPassword1" />
-							</div>
 							<button type="submit" className="btn btn-primary">Add Contact</button>
 						</form>
 					</div>
