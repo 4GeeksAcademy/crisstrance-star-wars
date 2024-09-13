@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { ContextExample } from "../component/ContentExample.jsx"
-import { AddCard } from "../component/AddCard.jsx"
+import { AddCard } from "./AddCard.jsx"
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import swland from "../../img/star-wars-back0.jpg";
 import "../../styles/home.css";
@@ -14,20 +14,10 @@ export const Home = () => {
 		<div className="text-center mt-5">
 			{/* <ContextExample /> */}
 			<div className="container">
-				<Spinner/>
 
-			<img src={swland} className="img-fluid " alt="..."></img>
+				<img src={swland} className="img-fluid " alt="Star War"></img>
 			</div>
 
-			{/* <div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-			</div> */}
-			{/* <p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p> */}
 		</div>
 	);
 };

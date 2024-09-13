@@ -7,7 +7,7 @@ export const Footer = () => {
 	return (
 		<footer className="footer mt-auto py-3 text-center ">
 			<p className="text-light">
-				Made with <i className="fa fa-heart text-danger" /> by {store.user} . . . This web is under contruction <i className="fas fa-tools"></i>
+				Made by {store.owner} . . . This web is under contruction <i className="fas fa-tools"></i>
 			</p>
 		</footer>
 	)
