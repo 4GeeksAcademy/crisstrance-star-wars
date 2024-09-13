@@ -22,10 +22,10 @@ export const Contact = () => {
         <div className="container mt-4">
             <h1 className="text-light">Contacts</h1>
             <div className="d-flex justify-content-end">
-                <button className="btn btn-secondary mb-4" onClick={() => navigate('/add-contact')}>Add a new contact</button>
+                <button className="btn btn-warning mb-4" onClick={() => navigate('/add-contact')}>Add a new contact</button>
             </div>
             {contacts.map((item, index) => (
-                <div key={index} className="d-flex justify-content-between border p-4 mb-4 text-light">
+                <div key={index} className="d-flex justify-content-between border border-warning p-4 mb-4 text-light">
                     <img className="me-5" style={{ width: '170px' }} src={yoda} />
                     <div className="me-auto">
                         <p className="h4 my-3 text-light">{item.name}</p>
@@ -34,8 +34,8 @@ export const Contact = () => {
                         <p><i className="fas fa-map-marker-alt me-2 text-light"></i> {item.address}</p>
                     </div>
                     <div>
-                        <i className="fas fa-edit me-3" onClick={() => handleEdit(item)}></i>
-                        <i className="fas fa-trash-alt" onClick={() => handleDelete(item)}></i>
+                        <i className="fas fa-edit me-3 text-info" onClick={() => handleEdit(item)}></i>
+                        <i className="fas fa-trash-alt text-danger" onClick={() => handleDelete(item)}></i>
                     </div>
                 </div>
             ))}
