@@ -29,7 +29,7 @@ export const Planets = () => {
                             <div className="d-flex justify-content-between">
                                 <button className="btn btn-warning me-1"
                                         onClick={() => navigate(`/planets/${item.uid}`)}>Details</button>
-                                <button className="btn btn-light btn-outline-danger" onClick={() => actions.addFavorite(item)} ><i className="far fa-heart"></i></button>
+                                <button className="btn btn-light btn-outline-danger" onClick={() => actions.addFavorite({name: item.name, type: 'Planet'})} ><i className="far fa-heart"></i></button>
                             </div>
                         </div>
                     </div>

@@ -28,7 +28,7 @@ export const Starships = () => {
                                 <div className="d-flex justify-content-between">
                                     <button className="btn btn-warning me-1"
                                         onClick={() => navigate(`/starships/${item.uid}`)}>Details</button>
-                                    <button className="btn btn-light btn-outline-danger" onClick={() => actions.addFavorite(item)}><i className="far fa-heart"></i></button>
+                                    <button className="btn btn-light btn-outline-danger" onClick={() => actions.addFavorite({name: item.name, type: 'Starship'})}><i className="far fa-heart"></i></button>
                                 </div>
                             </div>
                         </div>

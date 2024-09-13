@@ -17,8 +17,8 @@ export const BtnFavorite = () => {
                 <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end">
                     {store.favorites.map((item, index) =>
                         <li key={index} className="dropdown-item d-flex justify-content-between">
-                            <p>{item.name} - {item.type} </p>
-                            <span className="dropdown-item" onClick={() => actions.removeFavorite(item)} > <i className="fas fa-trash-alt text-danger"></i></span>
+                            <p className="d-flex justify-content-start">{item.name} - {item.type} </p>
+                            <span className="d-flex justify-content-end" onClick={() => actions.removeFavorite(item)} > <i className="fas fa-trash-alt text-danger"></i></span>
                         </li>
                     )}
 

@@ -15,7 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			owner: 'Cristian',
+			owner: 'Cristian Aravena',
 			cohorte: 'Spain-77',
 			number: 8,
 			isLoged: false,
@@ -31,7 +31,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			characterDetails: {},
 			planetDetails: {},
 			starshipDetails: {},
-			favorites: []
+			favorites: [],
+			contacts: [],
+			newContact: {}
 
 		},
 		actions: {
@@ -69,7 +71,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setIsLoged: (newState) => { setStore({ isLoged: newState }) },
 
 			addFavorite: (newFavorite) => {
+				const duplicate = getStore().favorites.some((favorite)=>favorite.name === newFavorite.name)
+				if (duplicate) return
 				setStore({ favorites: [...getStore().favorites, newFavorite]})
+				localStorage.setItem("favorites", JSON.stringify(favorites))
+
 			},
 			removeFavorite: (item) => {
 				setStore({ favorites: getStore().favorites.filter(fav => fav !== item) })
@@ -168,29 +174,92 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json()
 				console.log(data.result.properties)
 				setStore({ starshipDetails: data.result.properties})
+			},
+
+			createAgenda: async (dataToSend) => {
+				const uri = 'https://playground.4geeks.com/contact/agendas/cristian';
+				const options = {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(dataToSend)
+				};
+				const response = await fetch(uri, options);
+				if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText);
+					return;
+				};
+				getActions().getContacts();
+			},
+			
+			getContacts: async () => {
+				const uri = `${getStore().host}`;
+				const response = await fetch(uri);
+			
+				if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText);
+			
+					if (response.status === 404) {
+						console.log('Agenda no encontrada. Creando una nueva...');
+						await getActions().createAgenda();
+					}
+			
+					return;
+				}
+			
+				const data = await response.json();
+				setStore({ contacts: data.contacts });
+			},
+			addContact: async (dataToSend) => {
+				const uri = `${getStore().host}`;
+				const options = {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(dataToSend)
+				};
+				const response = await fetch(uri, options);
+				if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText);
+					return;
+				};
+				getActions().getContacts();
+			},
+			editContact: async (item, dataToSend) => {
+				const uri = `${getStore().host}/${item.id}`;
+				const options = {
+					method: 'PUT',
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(dataToSend)
+				};
+				const response = await fetch(uri, options);
+				if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText);
+					return;
+				}
+				getActions().getContacts();
+			},
+			deleteContact: async (item) => {
+				const uri = `${getStore().host}/${item.id}`;
+				const options = {
+					method: 'DELETE',
+					headers: {
+						"Content-Type": "application/json"
+					}
+				};
+				const response = await fetch(uri, options);
+				if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText);
+					return;
+				}
+				getActions().getContacts();
 			}
 		
-			// getPublications: async () => {
-			// 	// 1 defino la uri
-			// 	const uri = `https://playground.4geeks.com/contact/agendas/cristian/contacts`  // string
-			// 	// 2 defino las opciones
-			// 	const options = {
-			// 	  method: 'GET'
-			// 	}  // objeto
-			// 	// 3 ejecuto el fetch que demora y lo tengo esperar
-			// 	const response = await fetch(uri, options)
-			// 	// 4 verifico si el fetch dió error
-			// 	if (!response.ok) {
-			// 	  // 4.1 Trato el error y salgo de la fucnion
-			// 	  console.log('Error: ', response.status, response.statusText)
-			// 	  return // IMPORTANTE
-			// 	}
-			// 	// 5 obtengo los datos json del response y espero xq demora
-			// 	const data = await response.json()
-			// 	// console.log('Data es = ', data);
-			// 	// 6 ejecuto la lógica necesaria de la app
-			// 	setPublications(publications.data.results)
-			//   }
+		
 		}
 	};
 };

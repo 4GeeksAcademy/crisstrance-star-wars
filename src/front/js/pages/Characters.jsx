@@ -28,7 +28,7 @@ export const Characters = () => {
                                     <button
                                         className="btn btn-warning me-1"
                                         onClick={() => navigate(`/characters/${item.uid}`)}>Details</button>
-                                    <button className="btn btn-light btn-outline-danger" onClick={() => actions.addFavorite(item)}
+                                    <button className="btn btn-light btn-outline-danger" onClick={() => actions.addFavorite({name: item.name, type: 'Character'})}
                                     ><i className="far fa-heart"></i></button>
                                 </div>
                             </div>
