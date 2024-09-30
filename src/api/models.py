@@ -1,16 +1,18 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 
 db = SQLAlchemy()
 
 
 class Users(db.Model):
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(20), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    is_admin = db.Column(db.Boolean(), unique=False, nullable=True)
-    first_name = db.Column(db.String(), unique=False, nullable=True)
+    is_admin = db.Column(db.Boolean(), unique=False, nullable=False)
+    firs_name = db.Column(db.String(), unique=False, nullable=True)
     last_name = db.Column(db.String(), unique=False, nullable=True)
 
     def __repr__(self):
@@ -18,9 +20,13 @@ class Users(db.Model):
 
     def serialize(self):
         # Do not serialize the password, its a security breach
-        return {"id": self.id,
-                "email": self.email,
-                "is_active": self.is_active}
+        return {'id': self.id,
+                'email': self.email,
+                'is_active': self.is_active,
+                'is_admin': self.is_admin,
+                'first_name': self.firs_name,
+                'last_name': self.last_name,
+                'posts': [row.serialize() for row in self.posts_to]}
     
 
 class Followers(db.Model):
@@ -122,3 +128,8 @@ class Planets(db.Model):
 
 class PlanetFavorites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    users_to = db.relationship('Users', foreign_keys=[users_id], backref=db.backref('planetFavorites_to', lazy='select'))
+    planet_id = db.Column(db.Integer, db.ForeignKey('planets.id'))
+    planet_to = db.relationship('Planets', foreign_keys=[planet_id], backref=db.backref('planetFavorites_to', lazy='select'))
+    
