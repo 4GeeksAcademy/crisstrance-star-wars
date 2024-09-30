@@ -12,7 +12,7 @@ class Users(db.Model):
     password = db.Column(db.String(20), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     is_admin = db.Column(db.Boolean(), unique=False, nullable=False)
-    firs_name = db.Column(db.String(), unique=False, nullable=True)
+    first_name = db.Column(db.String(), unique=False, nullable=True)
     last_name = db.Column(db.String(), unique=False, nullable=True)
 
     def __repr__(self):
@@ -104,6 +104,20 @@ class Characters(db.Model):
     eye_color = db.Column(db.String, unique=False, nullable=False)
     birth_year = db.Column(db.String, unique=False, nullable=False)
     gender = db.Column(db.String, unique=False, nullable=False)
+
+    def serialize(self):
+        # Do not serialize the password, its a security breach
+        return {'id': self.id,
+                'name': self.name,
+                'height': self.height,
+                'mass': self.mass,
+                'hair_color': self.hair_color,
+                'skin_color': self.skin_color,
+                'eye_color': self.eye_color,
+                'birth_year': self.birth_year,
+                'gender': self.gender,
+                # 'characters': [row.serialize() for row in self.characters_to]
+                }
 
 
 class CharacterFavorites(db.Model):
