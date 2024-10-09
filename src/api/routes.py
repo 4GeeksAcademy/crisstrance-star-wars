@@ -38,6 +38,7 @@ def login():
     access_token = create_access_token(identity={'email' : user.email, 'user_id' : user.id, 'is_admin' : user.is_admin})
     response_body["message"] = f"Bienvenido {email}"
     response_body["access_token"] = access_token
+    response_body["results"] = {}
     return response_body, 200
 
 

@@ -1,11 +1,15 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext.js";
 import swimage from "../../img/star-wars-logo.png";
 import { BtnFavorite } from "./BtnFavorite.jsx";
 
 export const Navbar = () => {
 	const { store } = useContext(Context);
+	const navigate = useNavigate()
+	const handleLogin = () => {
+		navigate('/login')
+	}
 
 	return (
 		<nav className="navbar text-bg-dark">
@@ -21,6 +25,7 @@ export const Navbar = () => {
 						<li className="nav-item"><Link className="nav-link link-secondary" to="/planets">Planets</Link></li>
 						<li className="nav-item"><Link className="nav-link link-secondary" to="/starships">Starships</Link></li>
 						<li className="nav-item"><Link className="nav-link link-secondary" to="/contacts">Contacts</Link></li>
+						<li className="nav-item btn btn-success me-2"><Link className="nav-link link-light " to="/login">Login</Link></li>
 						<BtnFavorite />
 					</ul>
 
