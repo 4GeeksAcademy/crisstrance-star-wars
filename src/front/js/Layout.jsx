@@ -17,6 +17,7 @@ import { Planets } from "./pages/Planets.jsx";
 import { AddCard } from "./pages/AddCard.jsx";
 import { CharacterDetails } from "./pages/CharacterDetails.jsx";
 import { Starships } from "./pages/Starships.jsx";
+import { Dashboard } from "./pages/Dashboard.jsx";
 import { PlanetDetails } from "./pages/PlanetsDetails.jsx";
 import { StarshipDetails } from "./pages/StarshipDetail.jsx";
 import { EditContact } from "./pages/EditContact.jsx";
@@ -44,12 +45,14 @@ const Layout = () => {
                         <Route element={<EditContact />} path="/edit-contact" />
                         <Route element={<Characters />} path="/characters" />
                         <Route element={<Login />} path="/login" />
+                        <Route element={<Dashboard />} path="/dashboard" />
                         <Route element={<Starships />} path="/starships" />
                         <Route element={<CharacterDetails />} path="/characters/:id" />
                         <Route element={<PlanetDetails />} path="/planets/:id" />
                         <Route element={<StarshipDetails />} path="/starships/:id" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} path="*" />
+                        
                     </Routes>
                     <Footer />
                 </ScrollToTop>

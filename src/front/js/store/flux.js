@@ -71,14 +71,69 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setIsLoged: (newState) => { setStore({ isLoged: newState }) },
 
 			addFavorite: (newFavorite) => {
-				const duplicate = getStore().favorites.some((favorite)=>favorite.name === newFavorite.name)
+				const duplicate = getStore().favorites.some((favorite) => favorite.name === newFavorite.name)
 				if (duplicate) return
-				setStore({ favorites: [...getStore().favorites, newFavorite]})
+				setStore({ favorites: [...getStore().favorites, newFavorite] })
 				localStorage.setItem("favorites", JSON.stringify(favorites))
 
 			},
 			removeFavorite: (item) => {
 				setStore({ favorites: getStore().favorites.filter(fav => fav !== item) })
+			},
+
+			login: async (dataToSend) => {
+				const uri = `https://cautious-pancake-9jg465767pj374rp-3001.app.github.dev/api/login`;
+				console.log(`https://cautious-pancake-9jg465767pj374rp-3001.app.github.dev/api/login`);
+				const options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(dataToSend)
+				}
+				const response = await fetch(uri, options);
+				if (!response.ok) {
+					// Tratamos el error
+					// nuestro back devuelve el 401
+					console.log('Error', response.status, response.statusText);
+					return
+				}
+				const data = await response.json()
+
+				console.log(data)
+			},
+
+			accessProtected: async () => {
+				const token = localStorage.getItem('token')
+				const uri = `https://cautious-pancake-9jg465767pj374rp-3001.app.github.dev/api/protected`;
+				const options = {
+					method: 'GET',
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${token}`
+					}
+				}
+				const response = await fetch(uri, options);
+				if (!response.ok) {
+					// Tratamos el error
+					// nuestro back devuelve el 401
+					console.log('Error', response.status, response.statusText);
+					return
+				}no
+				const data = await response.json()
+			},
+
+			logout: () => {
+
+			},
+
+			isLogged: () => {
+				const token = localStorage.getItem('token')
+				if (token) {
+					// recuperamos usuario
+					const userData = (localStorage.getItem('user'))
+					setStore({ isLoged: true, user: userData.email })
+				}
 			},
 
 			getCharacter: async () => {
@@ -101,8 +156,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				console.log(data)
-				setStore({ characters: data.results})
-				localStorage.setItem('characters', JSON.stringify( data.results))
+				setStore({ characters: data.results })
+				localStorage.setItem('characters', JSON.stringify(data.results))
 			},
 			getPlanets: async () => {
 				// ALERT PARA SABER SI ESTA TODO CARGADO
@@ -124,8 +179,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				console.log(data)
-				setStore({ planets: data.results})
-				localStorage.setItem('planets', JSON.stringify( data.results))
+				setStore({ planets: data.results })
+				localStorage.setItem('planets', JSON.stringify(data.results))
 			},
 			getStarships: async () => {
 				// ALERT PARA SABER SI ESTA TODO CARGADO
@@ -147,33 +202,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				console.log(data)
-				setStore({ starships: data.results})
-				localStorage.setItem('starships', JSON.stringify( data.results))
+				setStore({ starships: data.results })
+				localStorage.setItem('starships', JSON.stringify(data.results))
 			},
 
 			getCharacterDetails: async (id) => {
 				console.log('en flux:', id)
-				const response = await fetch (`${getStore().host_swapi}/people/${id}`)
-				if (!response.ok) {return}
+				const response = await fetch(`${getStore().host_swapi}/people/${id}`)
+				if (!response.ok) { return }
 				const data = await response.json()
 				console.log(data.result.properties)
-				setStore({ characterDetails: data.result.properties})
+				setStore({ characterDetails: data.result.properties })
 			},
 			getPlanetDetails: async (id) => {
 				console.log('en flux:', id)
-				const response = await fetch (`${getStore().host_swapi}/planets/${id}`)
-				if (!response.ok) {return}
+				const response = await fetch(`${getStore().host_swapi}/planets/${id}`)
+				if (!response.ok) { return }
 				const data = await response.json()
 				console.log(data.result.properties)
-				setStore({ planetDetails: data.result.properties})
+				setStore({ planetDetails: data.result.properties })
 			},
 			getStarshipDetails: async (id) => {
 				console.log('en flux:', id)
-				const response = await fetch (`${getStore().host_swapi}/starships/${id}`)
-				if (!response.ok) {return}
+				const response = await fetch(`${getStore().host_swapi}/starships/${id}`)
+				if (!response.ok) { return }
 				const data = await response.json()
 				console.log(data.result.properties)
-				setStore({ starshipDetails: data.result.properties})
+				setStore({ starshipDetails: data.result.properties })
 			},
 
 			createAgenda: async (dataToSend) => {
@@ -192,22 +247,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				getActions().getContacts();
 			},
-			
+
 			getContacts: async () => {
 				const uri = `${getStore().host}`;
 				const response = await fetch(uri);
-			
+
 				if (!response.ok) {
 					console.log('Error: ', response.status, response.statusText);
-			
+
 					if (response.status === 404) {
 						console.log('Agenda no encontrada. Creando una nueva...');
 						await getActions().createAgenda();
 					}
-			
+
 					return;
 				}
-			
+
 				const data = await response.json();
 				setStore({ contacts: data.contacts });
 			},
@@ -258,8 +313,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				getActions().getContacts();
 			}
-		
-		
+
+
 		}
 	};
 };
